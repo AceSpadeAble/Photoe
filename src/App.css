@@ -1,0 +1,45 @@
+body{
+  background: url("background.png");
+}
+.hero_header{
+  color: #EEE;
+  font-weight:200;
+  margin:auto;
+  animation-duration:2s;
+  animation-name: fadeIn;
+}
+
+.hero{
+  position:absolute;
+  top:45%;
+  left:50%;
+  transform:translate(-50%, -50%);
+}
+
+.hero_btn{
+  margin:auto;
+  display:block;
+  margin-top:10%;
+  font-weight:400;
+  font-size:18px;
+  animation-duration:3s;
+  animation-name: fadeIn;
+}
+
+.hero_logo{
+  background-image:url("logo.png");
+  height:120px;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  animation-duration:1s;
+  animation-name: fadeIn;
+}
+
+@keyframes fadeIn{
+  from {
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}

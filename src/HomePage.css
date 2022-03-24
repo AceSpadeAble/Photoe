@@ -1,0 +1,39 @@
+.button {
+    margin-bottom: 10px;
+}
+
+.tui-image-editor-header img{
+    display:none;
+}
+
+.tui-image-editor-help-menu{
+    display:none!important;
+}
+.tui-image-editor-download-btn{
+    display:none!important;
+}
+.downloadBtn{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #222;
+    display: inline-block;
+    position: absolute;
+    right:50%;
+    transform:translate(50%);
+    bottom: 5%;
+    width: 120px;
+    height: 40px;
+    padding: 0;
+    line-height: 40px;
+    outline: none;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-family: 'Noto Sans',sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index:10;
+    vertical-align: middle;
+    letter-spacing: .3px;
+    text-align: center;
+}
