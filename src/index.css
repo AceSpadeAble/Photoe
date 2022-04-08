@@ -11,3 +11,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.fade-in{
+  animation-name:fadeIn;
+}
+@keyframes fadeIn{
+  from {
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+.centered{
+  margin:auto;
+}
+a:hover{
+  text-decoration:none;
+}
+.btn{
+  font-weight:400;
+  font-size:18px;
+  display:block;
+  margin-top:20px;
+}
+.btn input{
+  cursor:pointer;
+}
+.header-white{
+  color: #EEE;
+  font-weight:200;
+}

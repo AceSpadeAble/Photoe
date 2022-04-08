@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
-import {Button} from "react-bootstrap";
 import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+
 import HomePage from './HomePage';
 function App() {
   return (
@@ -9,11 +10,11 @@ function App() {
     <div className="App">
       <div className="hero">
         <div className="hero_logo"></div>
-        <h1 className="hero_header">
+        <h1 className="header-white fade-in centered">
           Photo editing, hassle free.
         </h1>
         <Link to="/app">
-        <Button className="hero_btn" variant="light">Upload an Image</Button>
+        <Button variant="light" className="centered fade-in">Upload an Image</Button>
         </Link>
     </div>
     </div>

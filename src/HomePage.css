@@ -1,7 +1,3 @@
-.button {
-    margin-bottom: 10px;
-}
-
 .tui-image-editor-header img{
     display:none;
 }
@@ -12,28 +8,33 @@
 .tui-image-editor-download-btn{
     display:none!important;
 }
-.downloadBtn{
-    background-color: #fff;
-    border: 1px solid #ddd;
-    color: #222;
+.app-btn{
     display: inline-block;
     position: absolute;
-    right:50%;
-    transform:translate(50%);
-    bottom: 5%;
+    top:8.5px;
+    margin-top:0px;
     width: 120px;
     height: 40px;
     padding: 0;
-    line-height: 40px;
-    outline: none;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    font-family: 'Noto Sans',sans-serif;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
+    line-height: 20px;
     z-index:10;
     vertical-align: middle;
     letter-spacing: .3px;
     text-align: center;
+}
+
+.load-btn{
+    right:180px;
+}
+.signup-btn{
+    left:180px;
+}
+.save-btn{
+    right:360px;
+}
+.tui-image-editor-header-buttons div{
+    border-radius:.25rem!important;
+    font-weight:400!important;
+    color: #212529!important;
+    font-size:1rem !important;
 }
