@@ -4,32 +4,10 @@ const User = require('./../models/user')
 const router = express.Router()
 
 router.route('/').get(async (req, res) => {
-    try {
-        let { email, password, username } = req.body
-
-        let user = await User.findOne({ email, username }).lean()
-        // const user = User.findOne({email: req.params.email})
-
-        if (!user) {
-            console.log('Get User with email')
-            res.status(401, {message: 'Error'})
-        } else {
-
-            if (user.password === password) {
-                res.send(`Get User with email ${email}`)
-            } else {
-                res.send(`Wrong Password`)
-            }
-        }
-
-        res.send('Done')
-    } catch (error) {
-        // console.log('error - ', error)
-    }
-
+    res.status(200)
 }).post(async (req, res) => {
+    console.log('Register - ', req.body)
 
-    console.log('TEST - ', req.body)
     let { username, email, password } = req.body
 
     let user = new User({
@@ -57,6 +35,36 @@ router.route('/').get(async (req, res) => {
 }).delete((req, res) => {
     const email = req.params.email
     res.send(`Delete User with email ${email}`)
+})
+
+router.post('/login', async (req, res) => {
+    console.log('Login - ', req.body)
+
+    try {
+        let { email, password, username } = req.body
+
+        // TO DO
+        // let user = await User.findOne({ email, password }).lean()
+        let user = await User.findOne({ email }).lean()
+      
+        console.log('user - ', user)
+        if (!user) {
+            console.log('User not existing')
+            res.status(401, {message: 'User not existing'})
+        } else {
+
+            if (user.password === password) {
+                res.send(`Get User with email ${email}`)
+            } else {
+                res.status(401, {message: 'Wrong Password'})
+               // res.send(`Wrong Password`)
+            }
+        }
+
+        res.send('Done')
+    } catch (error) {
+        // console.log('error - ', error)
+    }
 })
 
 module.exports = router

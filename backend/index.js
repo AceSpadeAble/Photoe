@@ -13,7 +13,6 @@ app.use(bodyParser.json());
 app.use(cors())
 const userRouter = require('./routes/users')
 
-
 app.use('/users', userRouter)
 
 app.listen(PORT, () => console.log(`it's alive on http//localhost:${PORT}`))
