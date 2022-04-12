@@ -11,6 +11,7 @@
     "downloadjs": "^1.4.7",
     "express": "^4.17.3",
     "install": "^0.13.0",
+    "mongoose": "^6.2.10",
     "npm": "^8.6.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.1",

@@ -17,7 +17,7 @@ export default function SignUp(props) {
       [field]: value,
     });
 
-    if ( !!errors[field] ) setErrors({
+    if (!!errors[field]) setErrors({
       ...errors,
       [field]: null
     });
@@ -35,6 +35,19 @@ export default function SignUp(props) {
     return newErrors;
   };
 
+  const submitData = async () => {
+    const result = await fetch('http://localhost:8080/users', {
+      method: 'POST',
+      mode: 'no-cors',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 'foo': 'bar' })
+    });
+    return result.json();
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = findFormErrors();
@@ -42,7 +55,7 @@ export default function SignUp(props) {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      console.log("success"); //change to POST request later
+      submitData().then(data=>console.log(data));
     }
   };
   return (

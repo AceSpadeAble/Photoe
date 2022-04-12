@@ -18,7 +18,7 @@ export default function Login(props) {
     });
   };
 
-  const checkErrors = () => {
+  const checkErrors = async () => {
     const { email, password, failed } = form;
     const errors = {};
 
@@ -26,6 +26,9 @@ export default function Login(props) {
     if (!password || password === "")
       errors.password = "Password cannot be blank.";
     if (false) errors.failed = "Invalid username or password"; //tba - waiting for backend\
+
+    const response = await fetch(`http://localhost:8080/users/${email}`, {method: 'GET', body: JSON.stringify({email})})
+    console.log('response - ', response)
 
     return errors;
   };
