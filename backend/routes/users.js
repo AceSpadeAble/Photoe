@@ -30,7 +30,7 @@ router.route('/').get(async (req, res) => {
 
 }).post(async (req, res) => {
 
-    // console.log('TEST - ', req)
+    console.log('TEST - ', req.body)
 
     let user = new User({
         email: req.body.email,
@@ -41,7 +41,7 @@ router.route('/').get(async (req, res) => {
 
     try {
         if (req.body) {
-            await user.save()
+            //await user.save()
             console.log(`Created New User`)
             res.send(`Created New User`)
         }
