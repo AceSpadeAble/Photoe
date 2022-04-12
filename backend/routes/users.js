@@ -10,20 +10,27 @@ const router = express.Router()
 //     res.send("User List")
 // })
 
-router.route('/:email').get((req, res) => {
-    const email = req.params.email
+router.route('/').get(async (req, res) => {
+    try {
+        const { email, password } = req.body
 
-    const user = User.findOne({email: req.params.email})
+        const user = await User.findOne({ email: email }).lean()
+        // const user = User.findOne({email: req.params.email})
 
-    if (!user) {
+        if (!user) {
+            console.log('Get User with email')
+            res.send(`Get User with email ${email}`)
+        }
+
+        console.log('user - ', user)
         res.send(`Get User with email ${email}`)
-    } 
+    } catch (error) {
+        console.log('error - ', error)
+    }
 
-    console.log('user - ', user)
-    res.send(`Get User with email ${email}`)
 }).post(async (req, res) => {
 
-    console.log('TEST - ', req.body)
+    // console.log('TEST - ', req)
 
     let user = new User({
         email: req.body.email,
@@ -33,8 +40,12 @@ router.route('/:email').get((req, res) => {
     console.log('user - ', user)
 
     try {
-        // await user.save()
-        res.send(`Created New User`)
+        if (req.body) {
+            await user.save()
+            console.log(`Created New User`)
+            res.send(`Created New User`)
+        }
+
     } catch (error) {
         console.log('error - ', error)
         res.send(`Something went wrong`)
