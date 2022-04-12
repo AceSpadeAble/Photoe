@@ -36,7 +36,7 @@ export default function SignUp(props) {
   };
 
   const submitData = async (data) => {
-    const result = await fetch('http://localhost:8080/users', {
+    const result = await fetch('http://localhost:8000/users', {
       method: 'POST',
       credentials: 'omit',
       headers: {
@@ -44,7 +44,7 @@ export default function SignUp(props) {
       },
       body: JSON.stringify(data)
     });
-    return result;
+    return result.json();
   }
 
   const handleSubmit = (e) => {
@@ -56,7 +56,8 @@ export default function SignUp(props) {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      submitData({ 'username': username, 'email': email, 'password': password });
+     submitData({ 'username': username, 'email': email, 'password': password }).then((response)=>console.log(response)).catch((e)=>{console.log(e);
+     });
     }
   };
 

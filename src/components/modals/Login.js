@@ -18,24 +18,23 @@ export default function Login(props) {
     });
   };
   const submitData = async (data) => {
-    const result = await fetch('http://localhost:8080/users', {
-      method: 'GET',
+    const result = await fetch('http://localhost:8000/users/login', {
+      method: 'POST',
       credentials: 'omit',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     });
-    return result;
+    return result.json();
   }
-  const checkErrors = async () => {
-    const { email, password, failed } = form;
+  const checkErrors =() => {
+    const { email, password} = form;
     const errors = {};
 
     if (!email || email === "") errors.email = "Email cannot be blank.";
     if (!password || password === "")
       errors.password = "Password cannot be blank.";
-    if (false) errors.failed = "Invalid username or password"; //tba - waiting for backend\
     return errors;
   };
 
@@ -47,7 +46,11 @@ export default function Login(props) {
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
-      submitData({'email': email, 'password': password });
+      submitData({'email': email, 'password': password }).then((response)=>console.log(response)).catch((e)=>{
+        console.log(error);
+        setError({...error, server: "Unable to connect"});
+      });
+      
     }
   };
   return (
@@ -76,6 +79,9 @@ export default function Login(props) {
           />
           <Form.Control.Feedback type="invalid">
             {error.password}
+          </Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid" style={{'display': 'inline'}}>
+            {error.server}
           </Form.Control.Feedback>
         </Form.Group>
         <Button variant="dark" type="submit" onClick={(e) => handleSubmit(e)}>
