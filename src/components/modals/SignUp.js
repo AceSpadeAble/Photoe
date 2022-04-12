@@ -17,7 +17,7 @@ export default function SignUp(props) {
       [field]: value,
     });
 
-    if ( !!errors[field] ) setErrors({
+    if (!!errors[field]) setErrors({
       ...errors,
       [field]: null
     });
@@ -35,16 +35,31 @@ export default function SignUp(props) {
     return newErrors;
   };
 
+  const submitData = async (data) => {
+    const result = await fetch('http://localhost:8080/users', {
+      method: 'POST',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return result;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const username = document.querySelector('#formBasicName').value;
+    const email = document.querySelector('#formBasicEmail').value;
+    const password = document.querySelector('#formBasicPassword').value;
     const newErrors = findFormErrors();
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      console.log("success"); //change to POST request later
+      submitData({ 'username': username, 'email': email, 'password': password });
     }
   };
+
   return (
     <Modal header="Sign Up" closeModal={props.closeModal}>
       <Form>

@@ -1,3 +1,5 @@
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
@@ -6,8 +8,9 @@ mongoose.connect('mongodb+srv://photoe:photoe@cluster0.bc856.mongodb.net/myFirst
 
 const PORT = 8080
 
-// app.use(express.urlencoded({extended: false}))
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json());
+app.use(cors())
 const userRouter = require('./routes/users')
 
 

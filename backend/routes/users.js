@@ -1,54 +1,55 @@
 
 const express = require('express')
-//const mongoose = require('mongoose')
-
 const User = require('./../models/user')
 const router = express.Router()
 
-// Get Users List
-// router.get('/', (req, res) => {
-//     res.send("User List")
-// })
-
 router.route('/').get(async (req, res) => {
     try {
-        const { email, password } = req.body
+        let { email, password, username } = req.body
 
-        const user = await User.findOne({ email: email }).lean()
+        let user = await User.findOne({ email, username }).lean()
         // const user = User.findOne({email: req.params.email})
 
         if (!user) {
             console.log('Get User with email')
-            res.send(`Get User with email ${email}`)
+            res.status(401, {message: 'Error'})
+        } else {
+
+            if (user.password === password) {
+                res.send(`Get User with email ${email}`)
+            } else {
+                res.send(`Wrong Password`)
+            }
         }
 
-        console.log('user - ', user)
-        res.send(`Get User with email ${email}`)
+        res.send('Done')
     } catch (error) {
-        console.log('error - ', error)
+        // console.log('error - ', error)
     }
 
 }).post(async (req, res) => {
 
     console.log('TEST - ', req.body)
+    let { username, email, password } = req.body
 
     let user = new User({
-        email: req.body.email,
-        password: req.body.password,
-        // email: req.body.email
+        username,
+        email,
+        password,
     })
     console.log('user - ', user)
 
     try {
         if (req.body) {
-            //await user.save()
+            await user.save()
             console.log(`Created New User`)
             res.send(`Created New User`)
+        } else {
+            res.send(`Something went wrong`)
         }
 
     } catch (error) {
         console.log('error - ', error)
-        res.send(`Something went wrong`)
     }
 }).put((req, res) => {
     const email = req.params.email
