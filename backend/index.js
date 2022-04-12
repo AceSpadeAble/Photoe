@@ -6,7 +6,8 @@ mongoose.connect('mongodb+srv://photoe:photoe@cluster0.bc856.mongodb.net/myFirst
 
 const PORT = 8080
 
-app.use(express.urlencoded({extended: false}))
+// app.use(express.urlencoded({extended: false}))
+app.use(express.json());
 const userRouter = require('./routes/users')
 
 
