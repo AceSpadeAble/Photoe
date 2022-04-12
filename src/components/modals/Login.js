@@ -17,7 +17,17 @@ export default function Login(props) {
       [field]: null
     });
   };
-
+  const submitData = async (data) => {
+    const result = await fetch('http://localhost:8080/users', {
+      method: 'GET',
+      credentials: 'omit',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return result;
+  }
   const checkErrors = async () => {
     const { email, password, failed } = form;
     const errors = {};
@@ -32,11 +42,12 @@ export default function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = checkErrors();
-
+    const email = document.querySelector('#formBasicEmail').value;
+    const password = document.querySelector('#formBasicPassword').value;
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
-      console.log("success"); //to be handled
+      submitData({'email': email, 'password': password });
     }
   };
   return (
