@@ -44,21 +44,30 @@ router.post('/login', async (req, res) => {
         let { email, password, username } = req.body
 
         // TO DO
-        // let user = await User.findOne({ email, password }).lean()
-        let user = await User.findOne({ email }).lean()
-      
+        let user = await User.findOne({ email, password }).lean()
+        //let user = await User.findOne({ email }).lean()
+
         console.log('user - ', user)
         if (!user) {
-            console.log('User not existing')
-            res.status(401, {message: 'User not existing'})
-        } else {
+            console.log("Wrong Password And/Or Login")
+            res.status(401, { message: 'Wrong Password And/Or Login' })
+            // res.send(`Wrong Password And/Or Login`)
 
-            if (user.password === password) {
-                res.send(`Get User with email ${email}`)
-            } else {
-                res.status(401, {message: 'Wrong Password'})
-               // res.send(`Wrong Password`)
-            }
+            // console.log('User not existing')
+            // res.status(401, {message: 'User not existing'})
+        } else {
+            console.log("Passed")
+            res.status(200, { message: 'Passed' })
+
+            // if (user.password === password) {
+            //     // console.log("Good Password")
+            //     res.status(200, {message: 'Good Password'})
+            //     //res.send(`Get User with email ${email}`)
+            // } else {
+            //     console.log("Wrong Password")
+            //     res.status(401, {message: 'Wrong Password'})
+            //    // res.send(`Wrong Password`)
+            // }
         }
 
         res.send('Done')
