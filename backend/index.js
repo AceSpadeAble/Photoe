@@ -12,7 +12,9 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json());
 app.use(cors())
 const userRouter = require('./routes/users')
+const photoRouter = require('./routes/photos')
 
 app.use('/users', userRouter)
+app.use('/photos', photoRouter)
 
 app.listen(PORT, () => console.log(`it's alive on http//localhost:${PORT}`))
