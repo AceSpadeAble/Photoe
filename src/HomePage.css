@@ -2,7 +2,8 @@
     display:none;
 }
 
-.tui-image-editor-download-btn{
+
+.tui-image-editor-download-btn, .tui-image-editor-help-menu{
     display:none!important;
 }
 .app-btn{

@@ -42,7 +42,6 @@ function HomePage() {
     uploadButton.addEventListener("change", ()=>{
       if(user){
       const formData = new FormData();
-      formData.append("name", uploadButton.files[0].name);
       formData.append("files", uploadButton.files[0]);
       formData.append("uid", user);
      fetch('http://localhost:8080/photos/upload', {
@@ -90,7 +89,7 @@ function HomePage() {
   
   return (
     <div className="App">
-      {user ? <><Button variant="light" onClick={()=>{setOpenImageModal(true)}} className="app-btn loadsaved-btn">Load Saved</Button> <Button variant="light" onClick={saveImage} className="app-btn save-btn">Save</Button> </>: null}
+      {user ? <><Button variant="light" uid={user} onClick={()=>{setOpenImageModal(true)}} className="app-btn loadsaved-btn">Load Saved</Button> <Button variant="light" onClick={saveImage} className="app-btn save-btn">Save</Button> </>: null}
       
       <Button variant="light" onClick={downloadImage} className="app-btn load-btn">Download</Button>
       
