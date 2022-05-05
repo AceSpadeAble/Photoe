@@ -4,6 +4,8 @@ const { default: mongoose } = require('mongoose')
 const Photo = require('./../models/photos')
 const User = require('./../models/user')
 const router = express.Router()
+const multer = require("multer")
+const upload = multer({ dest: "images/" })
 
 router.route('/').get(async (req, res) => {
     
@@ -82,15 +84,22 @@ router.post('/save', async (req, res) => {
 
 })
 
-router.post('/upload', async (req, res) => {
-    console.log('Save Photo - ', req.body)
 
-    let { name, userId } = req.body
+router.post("/upload", uploadFiles);
+function uploadFiles(req, res) {
+    console.log(req.body);
+}
+
+
+router.post('/upload', upload.single("files"), async (req, res) => {
+    console.log('Uplaod Photo - ', req.body)
+
+    let { name, uid, settings } = req.body
 
     let photo = new Photo({
         name,
-        userId,
-        // settings
+        uid,
+        settings
     })
 
     //const newId = photo._id.toString()
@@ -100,17 +109,17 @@ router.post('/upload', async (req, res) => {
     try {
         if (req.body) {
 
-            let user = await User.findById(userId).lean()
+            let user = await User.findById(uid).lean()
             user.photos = [...user.photos, photo._id]
             console.log('user - ', user)
-            // await user.save()
-            // await photo.save()
+            await user.save()
+            await photo.save()
             console.log(`Picture Saved`)
-            res.status(201, { message: 'Picture Saved' })
+            res.json({ message: "Successfully uploaded files" });
 
         } else {
             res.status(400, { message: 'Something went wrong' })
-            res.send(`Something went wrong`)
+            res.json({ message: `Something went wrong`})
         }
 
 
