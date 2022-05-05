@@ -19,13 +19,25 @@ router.route('/').get(async (req, res) => {
 
     try {
         if (req.body) {
-            await user.save()
-            console.log(`Created New User`)
-            res.send(`Created New User`)
+
+            let testUser = await User.findOne({ email }).lean()
+
+            if (testUser) {
+                console.log(`User Already Exists`)
+                res.status(400, { message: 'User Already Exists' })
+            } else {
+                // await user.save()
+                console.log(`Created New User`)
+                res.status(201, { message: 'Created New User' })
+            }
+
         } else {
+            res.status(400, { message: 'Something went wrong' })
             res.send(`Something went wrong`)
         }
 
+
+        res.send('Done Register')
     } catch (error) {
         console.log('error - ', error)
     }
@@ -42,22 +54,14 @@ router.post('/login', async (req, res) => {
 
     try {
         let { email, password, username } = req.body
+        let user = await User.findOne({ email, password }).lean()
 
-        // TO DO
-        // let user = await User.findOne({ email, password }).lean()
-        let user = await User.findOne({ email }).lean()
-      
         console.log('user - ', user)
         if (!user) {
             res.status(401, {message: 'User not existing'})
         } else {
-
-            if (user.password === password) {
-                res.send(`Get User with email ${email}`)
-            } else {
-                res.status(401, {message: 'Wrong Password'})
-               // res.send(`Wrong Password`)
-            }
+            console.log("Passed")
+            res.status(200, { message: 'Passed' })
         }
         res.send('Done')
     } catch (error) {
