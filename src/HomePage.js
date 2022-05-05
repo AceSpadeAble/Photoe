@@ -38,10 +38,16 @@ function HomePage() {
     loadButton.removeAttribute("style");
     loadButton.setAttribute("class", "btn btn-light");
     const uploadButton = document.getElementsByClassName("tui-image-editor-load-btn")[1];
+
     uploadButton.addEventListener("change", ()=>{
-      fetch('/upload', {
+      const formData = new FormData();
+      formData.append("name", 'bla');
+      formData.append("files", uploadButton.files[0]);
+      formData.append("uid", user);
+      
+     fetch('http://localhost:8080/users/upload', {
         method: 'POST',
-        body: {file: uploadButton.files[0]}
+        body: formData
       });
     });
   });

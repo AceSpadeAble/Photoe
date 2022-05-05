@@ -2,6 +2,8 @@
 const express = require('express')
 const User = require('./../models/user')
 const router = express.Router()
+const multer = require("multer")
+const upload = multer({ dest: "images/" })
 
 router.route('/').get(async (req, res) => {
     res.status(200)
@@ -69,5 +71,11 @@ router.post('/login', async (req, res) => {
         // console.log('error - ', error)
     }
 })
+
+router.post("/upload", upload.single("files"), uploadFiles);
+
+function uploadFiles(req, res) {
+    res.json({ message: "Successfully uploaded files" });
+}
 
 module.exports = router
