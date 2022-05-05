@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 
 
 const photosSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    name: {type: String},
     userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     // Settings for this picture (waiting for params)
+    settings: {type: String},
     createdAt: {
         type: Date,
         default: Date.now

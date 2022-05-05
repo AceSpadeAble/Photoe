@@ -2,8 +2,6 @@
 const express = require('express')
 const User = require('./../models/user')
 const router = express.Router()
-const multer = require("multer")
-const upload = multer({ dest: "images/" })
 
 router.route('/').get(async (req, res) => {
     res.status(200)
@@ -28,7 +26,7 @@ router.route('/').get(async (req, res) => {
                 console.log(`User Already Exists`)
                 res.status(400, { message: 'User Already Exists' })
             } else {
-                // await user.save()
+                //await user.save()
                 console.log(`Created New User`)
                 res.status(201, { message: 'Created New User' })
             }
@@ -72,10 +70,5 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post("/upload", upload.single("files"), uploadFiles);
-
-function uploadFiles(req, res) {
-    res.json({ message: "Successfully uploaded files" });
-}
 
 module.exports = router
