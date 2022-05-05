@@ -26,7 +26,7 @@ router.route('/').get(async (req, res) => {
                 console.log(`User Already Exists`)
                 res.status(400, { message: 'User Already Exists' })
             } else {
-                // await user.save()
+                //await user.save()
                 console.log(`Created New User`)
                 res.status(201, { message: 'Created New User' })
             }
