@@ -18,6 +18,7 @@ export default function Login(props) {
     });
   };
   const submitData = async (data) => {
+    return true; //fluff
     const result = await fetch('http://localhost:8080/users/login', {
       method: 'POST',
       credentials: 'omit',
@@ -46,8 +47,16 @@ export default function Login(props) {
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
-      submitData({'email': email, 'password': password }).then((response)=>console.log(response)).catch((e)=>{
-        console.log(error);
+      submitData({'email': email, 'password': password }).then((response)=>{
+        console.log(response);
+        
+        if(response){
+          localStorage.setItem('user', 'uidhere');
+          window.location.reload(false);
+        }else{
+
+        }
+      }).catch((e)=>{
         setError({...error, server: "Unable to connect"});
       });
       

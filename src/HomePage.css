@@ -2,9 +2,6 @@
     display:none;
 }
 
-.tui-image-editor-help-menu{
-    display:none!important;
-}
 .tui-image-editor-download-btn{
     display:none!important;
 }
@@ -25,6 +22,9 @@
 
 .load-btn{
     right:180px;
+}
+.loadsaved-btn{
+    right:540px;
 }
 .signup-btn{
     left:180px;

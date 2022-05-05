@@ -44,6 +44,8 @@ export default function SignUp(props) {
       },
       body: JSON.stringify(data)
     });
+    localStorage.setItem('user', 'uidhere');
+    window.location.reload(false);
     return result.json();
   }
 
