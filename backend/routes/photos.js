@@ -21,7 +21,7 @@ const upload = multer({ dest: "images/" })
 //     res.send('Done Delete Photo')
 // })
 
-router.get('/getImages', async (req, res) => {
+router.post('/getImages', async (req, res) => {
     console.log('Get Photo - ', req.body)
 
     // userId should be on front side 
@@ -36,7 +36,7 @@ router.get('/getImages', async (req, res) => {
         console.log('photosArray - ', photosArray)
 
         res.status(200)
-        res.send(photosArray)
+        res.json({photos: photosArray})
         // Send "Photo "to front
 
     } else {
