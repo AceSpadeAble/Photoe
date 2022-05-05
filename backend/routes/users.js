@@ -49,7 +49,6 @@ router.post('/login', async (req, res) => {
       
         console.log('user - ', user)
         if (!user) {
-            console.log('User not existing')
             res.status(401, {message: 'User not existing'})
         } else {
 
@@ -60,7 +59,6 @@ router.post('/login', async (req, res) => {
                // res.send(`Wrong Password`)
             }
         }
-
         res.send('Done')
     } catch (error) {
         // console.log('error - ', error)
