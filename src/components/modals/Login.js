@@ -58,7 +58,6 @@ export default function Login(props) {
       }).catch((e)=>{
         setError({...error, server: 'Unable to connect'});
       });
-      
     }
   };
   return (
