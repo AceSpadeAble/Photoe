@@ -82,4 +82,44 @@ router.post('/save', async (req, res) => {
 
 })
 
+router.post('/upload', async (req, res) => {
+    console.log('Save Photo - ', req.body)
+
+    let { name, userId } = req.body
+
+    let photo = new Photo({
+        name,
+        userId,
+        // settings
+    })
+
+    //const newId = photo._id.toString()
+    console.log('photo - ', photo)
+    //console.log('_id - ', newId)
+
+    try {
+        if (req.body) {
+
+            let user = await User.findById(userId).lean()
+            user.photos = [...user.photos, photo._id]
+            console.log('user - ', user)
+            // await user.save()
+            // await photo.save()
+            console.log(`Picture Saved`)
+            res.status(201, { message: 'Picture Saved' })
+
+        } else {
+            res.status(400, { message: 'Something went wrong' })
+            res.send(`Something went wrong`)
+        }
+
+
+        //res.status(200)
+        //res.send('Done Save Photo')
+    } catch (error) {
+        console.log('error - ', error)
+    }
+
+})
+
 module.exports = router
