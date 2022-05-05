@@ -40,22 +40,23 @@ function HomePage() {
     const uploadButton = document.getElementsByClassName("tui-image-editor-load-btn")[1];
 
     uploadButton.addEventListener("change", ()=>{
+      if(user){
       const formData = new FormData();
-      formData.append("name", 'bla');
+      formData.append("name", uploadButton.files[0].name);
       formData.append("files", uploadButton.files[0]);
       formData.append("uid", user);
-      
-     fetch('http://localhost:8080/users/upload', {
+     fetch('http://localhost:8080/photos/upload', {
         method: 'POST',
         body: formData
       });
+    }
     });
   });
 
   useEffect(()=>{
     if (isMounted.current) {
      const imageEditorInst = imageEditor.current.imageEditorInst;
-     imageEditorInst.loadImageFromURL('https://upload.wikimedia.org/wikipedia/en/9/95/Test_image.jpg', 'test').then(result => { //url from response
+     imageEditorInst.loadImageFromURL(`http://localhost:8080/image/${imageId}`, 'test').then(result => { //url from response
     });
     } else {
       isMounted.current = true;
