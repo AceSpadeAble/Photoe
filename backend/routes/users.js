@@ -62,6 +62,7 @@ router.post('/login', async (req, res) => {
         } else {
             console.log("Passed")
             res.status(200, { message: 'Passed' })
+            res.send({auth: true, id:user._id});
         }
         res.send('Done')
     } catch (error) {

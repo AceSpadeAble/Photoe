@@ -18,7 +18,6 @@ export default function Login(props) {
     });
   };
   const submitData = async (data) => {
-    return true; //fluff
     const result = await fetch('http://localhost:8080/users/login', {
       method: 'POST',
       credentials: 'omit',
@@ -27,6 +26,7 @@ export default function Login(props) {
       },
       body: JSON.stringify(data)
     });
+    console.log(result);
     return result.json();
   }
   const checkErrors =() => {
@@ -48,16 +48,15 @@ export default function Login(props) {
       setError(errors);
     } else {
       submitData({'email': email, 'password': password }).then((response)=>{
-        console.log(response);
         
-        if(response){
-          localStorage.setItem('user', 'uidhere');
+        if(response.auth){
+          localStorage.setItem('user', response.id);
           window.location.reload(false);
         }else{
-
+          setError({...error, server: 'Invalid credentials'});
         }
       }).catch((e)=>{
-        setError({...error, server: "Unable to connect"});
+        setError({...error, server: 'Unable to connect'});
       });
       
     }
