@@ -68,7 +68,7 @@ function HomePage() {
 
   const processFilters = () => {
     const imageEditorInst = imageEditor.current.imageEditorInst;
-    let size = imageSettings._originalDimensions;
+    let size = imageSettings.resize._originalDimensions;
     let angle = imageSettings.rotate._value;
     imageEditorInst.resize(size);
     //imageEditorInst.crop({left: 0, top:0, width:0, height:0});
@@ -77,11 +77,14 @@ function HomePage() {
 
   const saveImage = () => {
     const ui = imageEditor.current.imageEditorInst.ui;
-    console.log(ui);
+    const settings = {size: ui.resize._originalDimensions, angle: ui.rotate._value}
+
      fetch("http://localhost:8080/photos/saveSettings", {
         method: 'POST',
-        "Content-Type": "application/json",
-        body: {uid: user, imageId: imageId, settings:ui} //FIX
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(settings)
       }); 
   };
 
