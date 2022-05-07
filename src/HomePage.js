@@ -49,7 +49,7 @@ function HomePage() {
         fetch("http://localhost:8080/photos/upload", {
           method: "POST",
           body: formData,
-        });
+        }).then(res=>res.json()).then(data=>setImageId(data.fname));
       }
     });
   });

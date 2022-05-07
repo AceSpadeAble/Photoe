@@ -55,7 +55,7 @@ router.post('/upload', upload.single("files"), async (req, res) => {
             console.log('user - ', user)
             await photo.save()
             console.log(`Picture Uploaded`)
-            res.json({ message: "Successfully uploaded files" });
+            res.send(req.file.filename)
 
         } else {
             res.status(400, { message: 'Something went wrong' })
