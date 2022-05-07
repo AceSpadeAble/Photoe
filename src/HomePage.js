@@ -78,13 +78,13 @@ function HomePage() {
   const saveImage = () => {
     const ui = imageEditor.current.imageEditorInst.ui;
     const settings = {size: ui.resize._originalDimensions, angle: ui.rotate._value}
-
+    const data = {uid: user, imageId, settings}
      fetch("http://localhost:8080/photos/saveSettings", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(settings)
+        body: JSON.stringify(data)
       }); 
   };
 
