@@ -1,6 +1,15 @@
-.image{
-    margin:auto;
-    padding:10px;
-    font-size:36px;
-    cursor:deafult;
+.userImage{
+    width:120px;
+    height:120px;
+}
+.image-container{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap:5%;
+    padding:5%;
+    margin-top:5%;
+}
+.userImage:hover{
+    transform:scale(1.1);
+    transition:.25s;
 }

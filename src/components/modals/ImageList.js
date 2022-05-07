@@ -1,33 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "./Modal.js";
 import "./imagelist.css";
 
 export default function ImageList(props) {
+  const [images, setImages] = useState({});
 
-   const chooseImage = (id)=>{
-        props.setImage(id);
-        props.closeModal(false);
-    } 
+  const chooseImage = (id) => {
+    props.setImage(id);
+    props.closeModal(false);
+  };
 
-    const getImageList = ()=>{
-      fetch('http://localhost:8080/photos/getImages', {
-        method: 'GET',
-        body: {uid: props.uid}
-      }).then((res)=>{
-          res.map((link)=>{
-            console.log(link);
-            <img className="image" src={`http://localhost:8080/images/${link}`} onClick={()=>chooseImage(i)} key={i}/>
-        });
-      });
-        /*const images = [];
-
-        for(let i=0; i<5; i++){
-            images.push(<span className="image" onClick={()=>chooseImage(i)} key={i}>{i}</span>);
-        } */
-    }
+  const fetchImages = async () => {
+    const response = await fetch("http://localhost:8080/photos/getImages", {
+      method: "POST",
+      "Content-Type": "application/json",
+      body: { uid: props.uid }
+    });
+    const js = await response.json();
+    setImages({ ar: js.photos, loaded: true });
+  };
+  useEffect(() => {
+    fetchImages();
+  }, []);
   return (
     <Modal header="Select a Project" closeModal={props.closeModal}>
-        {getImageList()}
+      <div className="image-container">
+      {images.loaded ? images.ar.map((data)=><img onClick={()=>chooseImage(data)}src={`http://localhost:8080/images/${data}`} className="userImage" key={data}/>) : null}
+      </div>
     </Modal>
   );
 }
