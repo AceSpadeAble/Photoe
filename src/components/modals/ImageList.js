@@ -17,7 +17,8 @@ export default function ImageList(props) {
       body: { uid: props.uid }
     });
     const js = await response.json();
-    setImages({ ar: js.photos, loaded: true });
+    console.log(js);
+    //setImages({ ar: js.photos, loaded: true });
   };
   useEffect(() => {
     fetchImages();
