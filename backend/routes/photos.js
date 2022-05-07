@@ -130,4 +130,33 @@ router.post('/upload', upload.single("files"), async (req, res) => {
 
 })
 
+router.post('/updateImage', async (req, res) => {
+    console.log('Update Photo - ', req.body)
+    
+    let { uid, _id, settings } = req.body
+
+    try {
+        if (req.body) {
+
+            let photo = await Photo.findByIdAndUpdate(_id, {
+                $set: { settings }
+            }, { safe: true, new: true }).lean()
+            console.log('photo - ', photo)
+            console.log(`Picture Updated`)
+            res.json({ message: "Picture Updated" });
+
+        } else {
+            res.status(400, { message: 'Something went wrong' })
+            res.json({ message: `Something went wrong` })
+        }
+
+
+        //res.status(200)
+        //res.send('Done Save Photo')
+    } catch (error) {
+        console.log('error - ', error)
+    }
+
+})
+
 module.exports = router
