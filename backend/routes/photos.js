@@ -107,12 +107,12 @@ router.post('/upload', upload.single("files"), async (req, res) => {
     try {
         if (req.body) {
 
-            let user = await User.findByIdAndUpdate(uid, {
-                $addToSet: { photos: photo._id }
-            }, { safe: true, new: true }).lean()
-            console.log('user - ', user)
-            await photo.save()
-            console.log(`Picture Saved`)
+            // let user = await User.findByIdAndUpdate(uid, {
+            //     $addToSet: { photos: photo._id }
+            // }, { safe: true, new: true }).lean()
+            // console.log('user - ', user)
+            // await photo.save()
+            console.log(`Picture Uploaded`)
             res.json({ message: "Successfully uploaded files" });
 
         } else {
@@ -128,5 +128,35 @@ router.post('/upload', upload.single("files"), async (req, res) => {
     }
 
 })
+
+router.post('/saveSettings', async (req, res) => {
+    console.log('Save Photo Settings - ', req.body)
+    
+    let { uid, imageId, settings } = req.body
+
+    try {
+        if (req.body) {
+
+            // let photo = await Photo.findByIdAndUpdate(imageId, {
+            //     $set: { settings }
+            // }, { safe: true, new: true }).lean()
+            // console.log('photo - ', photo)
+            console.log(`Picture Settings Saved`)
+            res.json({ message: "Picture Settings Saved" });
+
+        } else {
+            res.status(400, { message: 'Something went wrong' })
+            res.json({ message: `Something went wrong` })
+        }
+
+
+        //res.status(200)
+        //res.send('Done Save Photo')
+    } catch (error) {
+        console.log('error - ', error)
+    }
+
+})
+
 
 module.exports = router

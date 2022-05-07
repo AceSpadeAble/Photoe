@@ -78,10 +78,11 @@ function HomePage() {
   const saveImage = () => {
     const ui = imageEditor.current.imageEditorInst.ui;
     console.log(ui);
-    /* fetch('/saveSettings', {
+     fetch("http://localhost:8080/photos/saveSettings", {
         method: 'POST',
+        "Content-Type": "application/json",
         body: {uid: user, imageId: imageId, settings:ui} //FIX
-      }); */
+      }); 
   };
 
   const logOut = () => {
