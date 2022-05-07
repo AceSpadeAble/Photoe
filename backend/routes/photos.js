@@ -22,20 +22,21 @@ const upload = multer({ dest: "images/" })
 // })
 
 router.post('/getImages', async (req, res) => {
-   //console.log('Get Photo - ', req.body)
+    console.log('Get Photo - ', req.body)
 
     // userId should be on front side 
     let { uid } = req.body
     let photos = await Photo.find({ userId: uid }).lean()
-   // console.log('photos - ', photos)
+    console.log('photos - ', photos)
 
     // got params, now search in storage 
 
     if (photos) {
         let photosArray = photos.map(photo => photo.name)
-        //console.log('photosArray - ', photosArray)
+        console.log('photosArray - ', photosArray)
 
         res.status(200)
+        // CHANGE SEND ARRAY OF OBJECTS
         res.json({photos: photosArray})
         // Send "Photo "to front
 
@@ -132,15 +133,21 @@ router.post('/upload', upload.single("files"), async (req, res) => {
 router.post('/saveSettings', async (req, res) => {
     console.log('Save Photo Settings - ', req.body)
     
-    let { uid, imageId, settings } = req.body
+    let stringSettings = JSON.stringify(req.body.settings)
+    // console.log('phostringSettingst - ', stringSettings)
+
 
     try {
         if (req.body) {
 
-            // let photo = await Photo.findByIdAndUpdate(imageId, {
-            //     $set: { settings }
+            let photo = await Photo.findOne({name: req.body.imageId })
+            photo.settings = stringSettings
+            console.log('photo - ', photo)
+            await photo.save()
+            // let photo = await Photo.findOne(name: req.body.imageId, {
+            //    $set: { stringSettings }
             // }, { safe: true, new: true }).lean()
-            // console.log('photo - ', photo)
+
             console.log(`Picture Settings Saved`)
             res.json({ message: "Picture Settings Saved" });
 
