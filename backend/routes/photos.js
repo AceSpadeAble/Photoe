@@ -47,7 +47,6 @@ router.post('/getImages', async (req, res) => {
 
    // res.send('Done Get Photo')
 })
-
 // router.post('/save', async (req, res) => {
 //     console.log('Save Photo - ', req.body)
 

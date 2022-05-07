@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-mongoose.connect()
+mongoose.connect('mongodb+srv://photoe:photoe@cluster0.bc856.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
 
 const PORT = 8080
 
@@ -16,5 +16,6 @@ const photoRouter = require('./routes/photos')
 
 app.use('/users', userRouter)
 app.use('/photos', photoRouter)
+app.use('/images', express.static('images'));
 
-app.listen(PORT, () => console.log(`it's alive on http//localhost:${PORT}`))
+app.listen(PORT, () => console.log(`it's alive on http//localhost:${PORT}.`))
