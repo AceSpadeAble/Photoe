@@ -7,20 +7,6 @@ const router = express.Router()
 const multer = require("multer")
 const upload = multer({ dest: "images/" })
 
-// router.route('/').get(async (req, res) => {
-
-// }).post(async (req, res) => {
-
-// }).put((req, res) => {
-//     console.log('Update Photo - ', req.body)
-//     res.status(200)
-//     res.send('Done Update Photo')
-// }).delete((req, res) => {
-//     console.log('Delete Photo - ', req.body)
-//     res.status(200)
-//     res.send('Done Delete Photo')
-// })
-
 router.post('/getImages', async (req, res) => {
     console.log('Get Photo - ', req.body)
 
@@ -32,14 +18,8 @@ router.post('/getImages', async (req, res) => {
     // got params, now search in storage 
 
     if (photos) {
-        let photosArray = photos.map(photo => photo.name)
-        console.log('photosArray - ', photosArray)
-
         res.status(200)
-        // CHANGE SEND ARRAY OF OBJECTS
-        res.json({photos: photosArray})
-        // Send "Photo "to front
-
+        res.json(photos)
     } else {
         res.status(400)
         res.send("There is no such thing")
@@ -48,45 +28,6 @@ router.post('/getImages', async (req, res) => {
 
    // res.send('Done Get Photo')
 })
-// router.post('/save', async (req, res) => {
-//     console.log('Save Photo - ', req.body)
-
-//     let { name, userId } = req.body
-
-//     let photo = new Photo({
-//         name,
-//         userId,
-//         // settings
-//     })
-
-//     //const newId = photo._id.toString()
-//     console.log('photo - ', photo)
-//     //console.log('_id - ', newId)
-
-//     try {
-//         if (req.body) {
-
-//             let user = await User.findById(userId).lean()
-//             user.photos = [...user.photos, photo._id]
-//             console.log('user - ', user)
-//             // await user.save()
-//             // await photo.save()
-//             console.log(`Picture Saved`)
-//             res.status(201, { message: 'Picture Saved' })
-
-//         } else {
-//             res.status(400, { message: 'Something went wrong' })
-//             res.send(`Something went wrong`)
-//         }
-
-
-//         //res.status(200)
-//         //res.send('Done Save Photo')
-//     } catch (error) {
-//         console.log('error - ', error)
-//     }
-
-// })
 
 router.post('/upload', upload.single("files"), async (req, res) => {
     console.log('Uplaod Photo - ', req.body)
@@ -108,11 +49,11 @@ router.post('/upload', upload.single("files"), async (req, res) => {
     try {
         if (req.body) {
 
-            // let user = await User.findByIdAndUpdate(uid, {
-            //     $addToSet: { photos: photo._id }
-            // }, { safe: true, new: true }).lean()
-            // console.log('user - ', user)
-            // await photo.save()
+            let user = await User.findByIdAndUpdate(uid, {
+                $addToSet: { photos: photo._id }
+            }, { safe: true, new: true }).lean()
+            console.log('user - ', user)
+            await photo.save()
             console.log(`Picture Uploaded`)
             res.json({ message: "Successfully uploaded files" });
 
@@ -144,9 +85,6 @@ router.post('/saveSettings', async (req, res) => {
             photo.settings = stringSettings
             console.log('photo - ', photo)
             await photo.save()
-            // let photo = await Photo.findOne(name: req.body.imageId, {
-            //    $set: { stringSettings }
-            // }, { safe: true, new: true }).lean()
 
             console.log(`Picture Settings Saved`)
             res.json({ message: "Picture Settings Saved" });
