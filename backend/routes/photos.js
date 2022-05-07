@@ -22,18 +22,18 @@ const upload = multer({ dest: "images/" })
 // })
 
 router.post('/getImages', async (req, res) => {
-   //console.log('Get Photo - ', req.body)
+    console.log('Get Photo - ', req.body)
 
     // userId should be on front side 
     let { uid } = req.body
     let photos = await Photo.find({ userId: uid }).lean()
-   // console.log('photos - ', photos)
+    console.log('photos - ', photos)
 
     // got params, now search in storage 
 
     if (photos) {
         let photosArray = photos.map(photo => photo.name)
-        //console.log('photosArray - ', photosArray)
+        console.log('photosArray - ', photosArray)
 
         res.status(200)
         res.json({photos: photosArray})
