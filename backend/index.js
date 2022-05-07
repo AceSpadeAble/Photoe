@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-mongoose.connect();
+mongoose.connect('');
 
 const PORT = 8080
 
