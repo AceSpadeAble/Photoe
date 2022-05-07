@@ -21,7 +21,6 @@ const myTheme = {
 };
 
 function HomePage() {
-  const [imageSrc, setImageSrc] = useState("");
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [openImageModal, setOpenImageModal] = useState(false);
@@ -61,7 +60,7 @@ function HomePage() {
       imageEditorInst.loadImageFromURL(
         `http://localhost:8080/images/${imageId}`,
         "test"
-      );
+      ).then(result=>{});
     } else {
       isMounted.current = true;
     }
@@ -161,8 +160,8 @@ function HomePage() {
       <ImageEditor
         includeUI={{
           loadImage: {
-            path: imageSrc,
-            name: "image",
+            path: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+            name: 'Blank'
           },
           theme: myTheme,
           menu: ["crop", "resize", "rotate"],
