@@ -7,7 +7,9 @@ export default function ImageList(props) {
 
   const chooseImage = (data) => {
     props.setImage(data.name);
+    if(data.settings){
     props.setImageSettings(JSON.parse(data.settings));
+    }
     props.closeModal(false);
   };
 

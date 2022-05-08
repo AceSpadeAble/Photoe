@@ -25,11 +25,10 @@ function HomePage() {
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [cropSettings, setCropSettings] = useState({});
   const [openImageModal, setOpenImageModal] = useState(false);
-  const [imageId, setImageId] = useState("");
+  const [imageId, setImageId] = useState();
   const [imageSettings, setImageSettings] = useState({});
   const imageEditor = React.createRef();
   const isMounted = useRef(false);
-
   const [user, setUser] = useState(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -42,6 +41,7 @@ function HomePage() {
     const uploadButton = document.getElementsByClassName(
       "tui-image-editor-load-btn"
     )[1];
+
     const applyCrop = document.querySelector('.tie-crop-button .apply');
     applyCrop.addEventListener("mouseup", ()=>{
       console.log(imageEditorInst.getCropzoneRect());
@@ -49,14 +49,16 @@ function HomePage() {
     });
     uploadButton.addEventListener("change", () => {
       if (user) {
+        console.log('event fired!');
         const formData = new FormData();
         formData.append("files", uploadButton.files[0]);
         formData.append("uid", user);
+
         fetch("http://localhost:8080/photos/upload", {
           method: "POST",
           body: formData,
         }).then(res=>res.text()).then(data=>setImageId(data));
-      }
+    }
     });
   });
 
@@ -73,15 +75,16 @@ function HomePage() {
   }, [imageId]);
 
   const processFilters = () => {
+    if(imageSettings){
      const imageEditorInst = imageEditor.current.imageEditorInst;
      let size = imageSettings.size;
      let angle = imageSettings.angle;
      let crops = imageSettings.crop;
-     imageEditorInst.resize(size)
-     .then(()=>imageEditorInst.rotate(angle))
-     .then((b)=>{imageEditorInst.crop({left: crops.left, top:crops.top, width:crops.width, height:crops.height})}).then(()=>{});
+     imageEditorInst.rotate(angle)
+     .then(()=>{if(size) imageEditorInst.resize(size)})
+     .then((b)=>{if(crops) imageEditorInst.crop({left: crops.left, top:crops.top, width:crops.width, height:crops.height})}).then(()=>{});
      document.querySelector('.tie-rotate-range-value').value = angle;
-    
+    }
   };
 
   const saveImage = () => {
