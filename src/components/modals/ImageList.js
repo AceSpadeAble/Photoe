@@ -5,8 +5,9 @@ import "./imagelist.css";
 export default function ImageList(props) {
   const [images, setImages] = useState({});
 
-  const chooseImage = (id) => {
-    props.setImage(id);
+  const chooseImage = (data) => {
+    props.setImage(data.name);
+    props.setImageSettings(JSON.parse(data.settings));
     props.closeModal(false);
   };
 
@@ -17,8 +18,7 @@ export default function ImageList(props) {
       body: { uid: props.uid }
     });
     const js = await response.json();
-    console.log(js);
-    //setImages({ ar: js.photos, loaded: true });
+    setImages({ ar: js, loaded: true });
   };
   useEffect(() => {
     fetchImages();
@@ -26,7 +26,7 @@ export default function ImageList(props) {
   return (
     <Modal header="Select a Project" closeModal={props.closeModal}>
       <div className="image-container">
-      {images.loaded ? images.ar.map((data)=><img onClick={()=>chooseImage(data)}src={`http://localhost:8080/images/${data}`} className="userImage" key={data}/>) : null}
+      {images.loaded ? images.ar.map((data)=><img onClick={()=>chooseImage(data)}src={`http://localhost:8080/images/${data.name}`} className="userImage" key={data.name}/>) : null}
       </div>
     </Modal>
   );

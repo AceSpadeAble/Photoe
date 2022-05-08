@@ -23,6 +23,7 @@ const myTheme = {
 function HomePage() {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
+  const [cropSettings, setCropSettings] = useState({});
   const [openImageModal, setOpenImageModal] = useState(false);
   const [imageId, setImageId] = useState("");
   const [imageSettings, setImageSettings] = useState({});
@@ -32,6 +33,7 @@ function HomePage() {
   const [user, setUser] = useState(localStorage.getItem("user"));
 
   useEffect(() => {
+    const imageEditorInst = imageEditor.current.imageEditorInst;
     const loadButton = document.querySelector(
       ".tui-image-editor-header-buttons"
     ).children[0];
@@ -40,7 +42,11 @@ function HomePage() {
     const uploadButton = document.getElementsByClassName(
       "tui-image-editor-load-btn"
     )[1];
-
+    const applyCrop = document.querySelector('.tie-crop-button .apply');
+    applyCrop.addEventListener("mouseup", ()=>{
+      console.log(imageEditorInst.getCropzoneRect());
+      setCropSettings(imageEditorInst.getCropzoneRect());
+    });
     uploadButton.addEventListener("change", () => {
       if (user) {
         const formData = new FormData();
@@ -49,7 +55,7 @@ function HomePage() {
         fetch("http://localhost:8080/photos/upload", {
           method: "POST",
           body: formData,
-        }).then(res=>res.json()).then(data=>setImageId(data.fname));
+        }).then(res=>res.text()).then(data=>setImageId(data));
       }
     });
   });
@@ -60,34 +66,36 @@ function HomePage() {
       imageEditorInst.loadImageFromURL(
         `http://localhost:8080/images/${imageId}`,
         "test"
-      ).then(result=>{});
+      ).then(()=>processFilters());
     } else {
       isMounted.current = true;
     }
   }, [imageId]);
 
   const processFilters = () => {
-    const imageEditorInst = imageEditor.current.imageEditorInst;
-    let size = imageSettings.resize._originalDimensions;
-    let angle = imageSettings.rotate._value;
-    imageEditorInst.resize(size);
-    //imageEditorInst.crop({left: 0, top:0, width:0, height:0});
-    imageEditorInst.rotate(angle);
+     const imageEditorInst = imageEditor.current.imageEditorInst;
+     let size = imageSettings.size;
+     let angle = imageSettings.angle;
+     let crops = imageSettings.crop;
+     imageEditorInst.resize(size)
+     .then(()=>imageEditorInst.rotate(angle))
+     .then((b)=>{imageEditorInst.crop({left: crops.left, top:crops.top, width:crops.width, height:crops.height})}).then(()=>{});
+     document.querySelector('.tie-rotate-range-value').value = angle;
+    
   };
 
   const saveImage = () => {
     const ui = imageEditor.current.imageEditorInst.ui;
-    console.log(ui);
-    const settings = {size: ui.resize._originalDimensions, angle: ui.rotate._value}
+    //console.log(ui);
+    const settings = {size: {width: ui.resize._els.widthRange._value, height:ui.resize._els.heightRange._value}, angle: ui.rotate._value, crop: cropSettings } 
     const data = {uid: user, imageId, settings}
-    console.log(data);
      fetch("http://localhost:8080/photos/saveSettings", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
-      }); 
+      });
   };
 
   const logOut = () => {
@@ -192,6 +200,7 @@ function HomePage() {
         <ImageList
           closeModal={setOpenImageModal}
           setImage={setImageId}
+          setImageSettings={setImageSettings}
           uid={user}
         ></ImageList>
       )}

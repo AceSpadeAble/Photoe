@@ -1,7 +1,9 @@
 .tui-image-editor-header img{
     display:none;
 }
-
+.tie-rotate-button{
+    display:none!important;
+}
 
 .tui-image-editor-download-btn, .tui-image-editor-help-menu{
     display:none!important;
