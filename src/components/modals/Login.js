@@ -51,7 +51,10 @@ export default function Login(props) {
         
         if(response.auth){
           localStorage.setItem('user', response.id);
-          window.location.reload(false);
+          props.setUser(response.id);
+          props.closeModal(false);
+          props.openImages(true);
+          props.alert('Login successful!');
         }else{
           setError({...error, server: 'Invalid credentials'});
         }

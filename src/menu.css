@@ -1,0 +1,29 @@
+.borgir{
+    position:fixed;
+    top:2%;
+    right:2%;
+    z-index:9999;
+    cursor: pointer;
+}
+
+.borgir:hover{
+    transition: .5s;
+    filter: drop-shadow( 2px 2px 3px rgba(255, 255, 255, .5));
+}
+
+.offcanvas{
+    background: #111;
+    color:white;
+    width:250px;
+    text-align:center;
+}
+.offcanvas-header{
+    justify-content:center;
+}
+.offcanvas-header .btn-close{
+    filter:invert();
+}
+.offcanvas-body{
+    display:flex;
+    flex-direction:column;
+}

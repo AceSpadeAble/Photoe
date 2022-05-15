@@ -17,10 +17,11 @@ export default function SignUp(props) {
       [field]: value,
     });
 
-    if (!!errors[field]) setErrors({
-      ...errors,
-      [field]: null
-    });
+    if (!!errors[field])
+      setErrors({
+        ...errors,
+        [field]: null,
+      });
   };
 
   const findFormErrors = () => {
@@ -36,30 +37,35 @@ export default function SignUp(props) {
   };
 
   const submitData = async (data) => {
-    const result = await fetch('http://localhost:8000/users', {
-      method: 'POST',
-      credentials: 'omit',
+    const result = await fetch("http://localhost:8080/users", {
+      method: "POST",
+      credentials: "omit",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
-    localStorage.setItem('user', 'uidhere');
-    window.location.reload(false);
-    return result.json();
-  }
+    const userid = await result.text();
+    localStorage.setItem("user", userid);
+    props.setUser(userid);
+    props.alert("Successfully registered and logged in!");
+    props.closeModal(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const username = document.querySelector('#formBasicName').value;
-    const email = document.querySelector('#formBasicEmail').value;
-    const password = document.querySelector('#formBasicPassword').value;
+    const username = document.querySelector("#formBasicName").value;
+    const email = document.querySelector("#formBasicEmail").value;
+    const password = document.querySelector("#formBasicPassword").value;
     const newErrors = findFormErrors();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-     submitData({ 'username': username, 'email': email, 'password': password }).then((response)=>console.log(response)).catch((e)=>{console.log(e);
-     });
+      submitData({ username: username, email: email, password: password })
+        .then((response) => console.log(response))
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
 

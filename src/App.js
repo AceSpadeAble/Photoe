@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link, Navigate, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './HomePage';
 function App() {
+
   return (
     <Router>
+
     <div className="App">
       <div className="hero">
         <div className="hero_logo"></div>
@@ -20,6 +22,7 @@ function App() {
     </div>
     <Routes>
               <Route exact path='/app' element={< HomePage />}></Route>
+              {localStorage.getItem("user") ? <Route path="/" element={<Navigate replace to="/app" />} /> : null }
     </Routes>
     </Router>
   );

@@ -8,36 +8,44 @@
 .tui-image-editor-download-btn, .tui-image-editor-help-menu{
     display:none!important;
 }
-.app-btn{
-    display: inline-block;
-    position: absolute;
-    top:8.5px;
-    margin-top:0px;
-    width: 120px;
-    height: 40px;
-    padding: 0;
-    line-height: 20px;
-    z-index:10;
-    vertical-align: middle;
-    letter-spacing: .3px;
-    text-align: center;
-}
 
-.load-btn{
-    right:180px;
-}
-.loadsaved-btn{
-    right:540px;
-}
-.signup-btn{
-    left:180px;
-}
-.save-btn{
-    right:360px;
-}
+
 .tui-image-editor-header-buttons div{
     border-radius:.25rem!important;
     font-weight:400!important;
     color: #212529!important;
     font-size:1rem !important;
+    z-index:999999;
+    width:218px!important;
+    transition:.5s;
+    opacity:0;
+}
+.tui-image-editor-header-buttons{
+    margin-top:900px!important;
+}
+.slid-in{
+    margin-right:8px!important;
+    opacity:1!important;
+    pointer-events:all;
+}
+.slid-out{
+    margin-right:-300px!important;
+    pointer-events: none;
+}
+ .tui-image-editor-menu-filter .tui-image-editor-submenu-item li:nth-child(3), .tui-image-editor-menu-filter .tui-image-editor-submenu-item li:nth-child(4), .tui-image-editor-menu-filter .tui-image-editor-submenu-item li:nth-child(5), .tui-image-editor-menu-filter .tui-image-editor-submenu-item li:nth-child(6){
+    display:none!important;
+} 
+
+li .filter-color-item:not(:nth-child(1)){
+    display:none!important;
+}
+
+.tie-filter-tint-opacity{
+    display:none!important;
+}
+
+.tui-colorpicker-clearfix li input{
+    height:10px;
+    font-size:unset!important;
+    width:10px;
 }
